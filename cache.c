@@ -128,77 +128,88 @@ int main(int argc, char* argv[])
 		}
 	}
 	
+  
+
+  printf("\nInput:\n");
+  printf("Jaimes-iMac:csc252-project4 jaimemontoya$ ./cacheSim -s 1024 -w 2 -l 512 -t trace.trace\n");
+  printf("Output:\n");
+  printf("argv[0]: ./cacheSim\n");
+  printf("argv[1]: -s\n");
+  printf("argv[2]: 1024\n");
+  printf("argv[3]: -w\n");
+  printf("argv[4]: 2\n");
+  printf("argv[5]: -l\n");
+  printf("argv[6]: 512\n");
+  printf("argv[7]: -t\n");
+  printf("argv[8]: trace.trace\n");
+  printf("\nargv[0]: %s", argv[0]);
+  printf("\nargv[1]: %s", argv[1]);
+  printf("\nargv[2]: %s", argv[2]);
+  printf("\nargv[3]: %s", argv[3]);
+  printf("\nargv[4]: %s", argv[4]);
+  printf("\nargv[5]: %s", argv[5]);
+  printf("\nargv[6]: %s", argv[6]);
+  printf("\nargv[7]: %s", argv[7]);
+  printf("\nargv[8]: %s\n", argv[8]);
+  FILE * fp;
+  char * lineinfile = NULL;
+  size_t len = 0;
+  ssize_t read; 
+  char *folder = "traces/";
+  char *tracefile = argv[8];
+  char fileaddress[80];
+  strcpy(fileaddress, "");
+  strcat(fileaddress, folder);
+  strcat(fileaddress, tracefile);
+  char singlechar[10];  
+  char sorl[1];
+  fp = fopen(fileaddress, "r");
+  if (fp == NULL){
+  	printf("Exit failure");
+  }else{
+  	printf("Perfect, success");
+  }
+  while((read = getline(&lineinfile, &len, fp)) != -1) {  	
+  	/*printf("%s", lineinfile);  	
+  	printf("%c\n", lineinfile[0]);
+  	printf("%c\n", lineinfile[1]);
+  	printf("%c\n", lineinfile[2]);
+  	printf("%c\n", lineinfile[3]);
+  	printf("%c\n", lineinfile[4]);
+  	printf("%c\n", lineinfile[5]);
+  	printf("%c\n", lineinfile[6]);
+  	printf("%c\n", lineinfile[7]);
+  	printf("%c\n", lineinfile[8]);
+  	printf("%c\n", lineinfile[9]);
+  	printf("%c\n", lineinfile[10]);
+  	printf("%c\n", lineinfile[11]);  */	
+  	//if (lineinfile[11] == "0"){
+  	//if (strcmp(lineinfile, "l 0x1ffff630\n") == 0){
+  	//if (strcmp(&lineinfile[0], "l") == '\0'){
+  		printf("We found a zero");
+      strncpy(sorl, &lineinfile[0], 1);
+  		strncpy(singlechar, &lineinfile[2], 10);
+  		//printf("The value is: %s\n", singlechar);
+  	//}
+    printf("The value of sorl: %s\n", sorl);
+    printf("The value of singlechar is: %s\n\n", singlechar);
+  }
+  fclose(fp);
+  if (lineinfile)
+  	free(lineinfile);
+  exit(EXIT_SUCCESS);
+  
+  	
+
+
+
+
   /* TODO: Probably should intitalize the cache */
 
-  uint32_t sets = size * 1024 / (line * ways);
-  int offset = log2(line);
-  int index = log2(sets);
-  int tag = 32 - (index + offset);
-
-  /*int cache[5][2] = {{0,0},{1,2},{2,4},{3,6},{4,8}};
-  int j;  
-  for (i=0; i<5; i++){
-  	for (j=0; j<2; j++){
-  		printf("cache[%d][%d] = %d\n", i,j, cache[i][j]);
-  	}
-  }*/
-  char *cache[sets][line];
-  int validbit[sets];
-  int dirtybit[sets];
-  for(i=0;i<sets; i++){
-  	validbit[i] = 0;
-  }
-  //printf("valid bit: %i\n", validbit[2]);
-  for(i=0;i<sets; i++){
-  	dirtybit[i] = 0;
-  }
-  //printf("dirty bit: %i\n", dirtybit[2]);
-  int j;
-  for (i=0; i<sets; i++){
-  	//printf("i: %i\n", i);
-  	for (j=0; j<line; j++){
-  		//printf("j: %i\n", j);
-  		//cache[i][j] = "0x1fffff50";
-  		cache[i][j] = "0x00000000";
-  		//printf("cache[%d][%d] = %s\n", sets,line, cache[sets][line]);
-  		printf("af:%s\n", cache[i][j]);
-  	}
-  }
-  printf("ok:%s\n", cache[0][0]);
-  
-  printf("Ways: %u; Sets: %u; Line Size: %uB;\n", ways, sets, line/* FIXME */);
-  printf("Tag: %d bits; Index: %d bits; Offset: %d bits\n", tag, index, offset/* FIXME */);
+  printf("Ways: %u; Sets: %u; Line Size: %uB\n", 0, 0, 0/* FIXME */);
+  printf("Tag: %d bits; Index: %d bits; Offset: %d bits\n", 0, 0, 0/* FIXME */);
 
 	/* TODO: Now we read the trace file line by line */
-
-
-  	FILE * fp;
-    char * lineinfile = NULL;
-    size_t len = 0;
-    ssize_t read;
-
-    char fileaddress[80];
-    strcpy(fileaddress, filename);
-
-    fp = fopen(fileaddress, "r");
-    if (fp == NULL){
-  	  printf("Exit failure");
-  	}else{
-  	  printf("Perfect, success");
-  	}
-
-    while ((read = getline(&lineinfile, &len, fp)) != -1) {
-        printf("Retrieved line of length %zu :\n", read);
-        printf("%s", lineinfile);
-    }
-
-    fclose(fp);
-    if (lineinfile)
-        free(lineinfile);
-    exit(EXIT_SUCCESS);
-
-
-
   
   /* TODO: Now we simulate the cache */  
 
