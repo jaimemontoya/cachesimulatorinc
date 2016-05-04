@@ -145,10 +145,38 @@ int main(int argc, char* argv[])
   strcpy(fileaddress, "");
   strcat(fileaddress, folder);
   strcat(fileaddress, tracefile);
+
+  int cachedata[sets][line];
+  int cachetag[sets][line];
+  int cachevb[sets][line];
+  int cachedb[sets][line];
+  int validbit[sets];
+  int dirtybit[sets];
+
   char hexstring[10];
-  int hexvalue;
+  uint32_t hexvalue;
   char sorl[1];
-  fp = fopen(fileaddress, "r");
+  uint32_t offsetvalue;
+  uint32_t indexvalue;
+  uint32_t tagvalue;
+  int existsincache;
+
+  /* TODO: Probably should intitalize the cache */
+
+  printf("Ways: %u; Sets: %u; Line Size: %uB\n", ways, sets, line);
+  printf("Tag: %d bits; Index: %d bits; Offset: %d bits\n", tag, index, offset);
+
+  for (int i = 0; i < sets; i++) {
+  	validbit[i] = 0;
+  	dirtybit[i] = 0;
+  	for (int j = 0; j < line; j++) {
+  		cache[i][j] = 0;
+  	}
+  }
+
+  /* TODO: Now we read the trace file line by line */
+
+    fp = fopen(fileaddress, "r");
   if (fp == NULL){
     printf("Exit failure");
   }else{
@@ -156,27 +184,34 @@ int main(int argc, char* argv[])
   }
   while((read = getline(&lineinfile, &len, fp)) != -1) {    
 
-  strncpy(sorl, &lineinfile[0], 1);
-  strncpy(hexstring, &lineinfile[2], 10);
-  hexvalue = (int)strtol(hexstring, NULL, 0);
-  printf("The value of sorl: %s\n\n", sorl);
-    printf("The value of hexstring is: %s\n\n", hexstring);
-    printf("The value of hexvalue is: %x\n\n", hexvalue);
+  	// load in data
+	  strncpy(sorl, &lineinfile[0], 1);
+	  strncpy(hexstring, &lineinfile[2], 10);
+	  hexvalue = (int)strtol(hexstring, NULL, 0);
+	  printf("The value of sorl: %s\n", sorl);
+	  printf("The value of hexstring is: %s\n", hexstring);
+	  printf("The value of hexvalue is: %x\n", hexvalue);
+
+	  offsetvalue = ((hexvalue << (32 - offset)) >> (32 - offset));
+	  printf("Offset value: %i\n", offsetvalue);
+
+	  indexvalue = ((hexvalue << (32 - offset - index)) >> (32 - index));
+	  printf("Index value: %i\n", indexvalue);
+
+	  tagvalue = (hexvalue >> (32 - tag));
+	  printf("Tag value: %i\n", tagvalue);
+
+
+	  // we now have ways, sets, line (size), sorl, offsetvalue, indexvalue, tagvalue
+
+
+
+
+
+
+	  printf("\n");
     
   }
-  
-  
-    
-
-
-
-
-  /* TODO: Probably should intitalize the cache */
-
-  printf("Ways: %u; Sets: %u; Line Size: %uB\n", ways, sets, line/* FIXME */);
-  printf("Tag: %d bits; Index: %d bits; Offset: %d bits\n", tag, index, offset/* FIXME */);
-
-  /* TODO: Now we read the trace file line by line */
   
   /* TODO: Now we simulate the cache */  
 
