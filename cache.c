@@ -131,32 +131,12 @@ int main(int argc, char* argv[])
   
 
   printf("\nInput:\n");
-  printf("Jaimes-iMac:csc252-project4 jaimemontoya$ ./cacheSim -s 1024 -w 2 -l 512 -t trace.trace\n");
-  printf("Output:\n");
-  printf("argv[0]: ./cacheSim\n");
-  printf("argv[1]: -s\n");
-  printf("argv[2]: 1024\n");
-  printf("argv[3]: -w\n");
-  printf("argv[4]: 2\n");
-  printf("argv[5]: -l\n");
-  printf("argv[6]: 512\n");
-  printf("argv[7]: -t\n");
-  printf("argv[8]: trace.trace\n");
-  printf("\nargv[0]: %s", argv[0]);
-  printf("\nargv[1]: %s", argv[1]);
-  printf("\nargv[2]: %s", argv[2]);
-  printf("\nargv[3]: %s", argv[3]);
-  printf("\nargv[4]: %s", argv[4]);
-  printf("\nargv[5]: %s", argv[5]);
-  printf("\nargv[6]: %s", argv[6]);
-  printf("\nargv[7]: %s", argv[7]);
-  printf("\nargv[8]: %s\n", argv[8]);
   FILE * fp;
   char * lineinfile = NULL;
   size_t len = 0;
   ssize_t read; 
-  char *folder = "traces/";
-  char *tracefile = argv[8];
+  char *folder = "";
+  char *tracefile = filename;
   char fileaddress[80];
   strcpy(fileaddress, "");
   strcat(fileaddress, folder);
@@ -171,31 +151,14 @@ int main(int argc, char* argv[])
   	printf("Perfect, success");
   }
   while((read = getline(&lineinfile, &len, fp)) != -1) {  	
-  	/*printf("%s", lineinfile);  	
-  	printf("%c\n", lineinfile[0]);
-  	printf("%c\n", lineinfile[1]);
-  	printf("%c\n", lineinfile[2]);
-  	printf("%c\n", lineinfile[3]);
-  	printf("%c\n", lineinfile[4]);
-  	printf("%c\n", lineinfile[5]);
-  	printf("%c\n", lineinfile[6]);
-  	printf("%c\n", lineinfile[7]);
-  	printf("%c\n", lineinfile[8]);
-  	printf("%c\n", lineinfile[9]);
-  	printf("%c\n", lineinfile[10]);
-  	printf("%c\n", lineinfile[11]);  */	
-  	//if (lineinfile[11] == "0"){
-  	//if (strcmp(lineinfile, "l 0x1ffff630\n") == 0){
-  	//if (strcmp(&lineinfile[0], "l") == '\0'){
-  		printf("We found a zero");
-      strncpy(sorl, &lineinfile[0], 1);
-  		strncpy(hexstring, &lineinfile[2], 10);
-      hexvalue = (int)strtol(hexstring, NULL, 0);
-  		//printf("The value is: %s\n", singlechar);
-  	//}
-    printf("The value of sorl: %s\n", sorl);
-    printf("The value of singlechar is: %s\n\n", hexstring);
+
+	strncpy(sorl, &lineinfile[0], 1);
+	strncpy(hexstring, &lineinfile[2], 10);
+	hexvalue = (int)strtol(hexstring, NULL, 0);
+	printf("The value of sorl: %s\n\n", sorl);
+    printf("The value of hexstring is: %s\n\n", hexstring);
     printf("The value of hexvalue is: %x\n\n", hexvalue);
+    
   }
   fclose(fp);
   if (lineinfile)
