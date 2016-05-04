@@ -161,7 +161,8 @@ int main(int argc, char* argv[])
   strcpy(fileaddress, "");
   strcat(fileaddress, folder);
   strcat(fileaddress, tracefile);
-  char singlechar[10];  
+  char hexstring[10];
+  int hexvalue;
   char sorl[1];
   fp = fopen(fileaddress, "r");
   if (fp == NULL){
@@ -188,11 +189,13 @@ int main(int argc, char* argv[])
   	//if (strcmp(&lineinfile[0], "l") == '\0'){
   		printf("We found a zero");
       strncpy(sorl, &lineinfile[0], 1);
-  		strncpy(singlechar, &lineinfile[2], 10);
+  		strncpy(hexstring, &lineinfile[2], 10);
+      hexvalue = (int)strtol(hexstring, NULL, 0);
   		//printf("The value is: %s\n", singlechar);
   	//}
     printf("The value of sorl: %s\n", sorl);
-    printf("The value of singlechar is: %s\n\n", singlechar);
+    printf("The value of singlechar is: %s\n\n", hexstring);
+    printf("The value of hexvalue is: %x\n\n", hexvalue);
   }
   fclose(fp);
   if (lineinfile)
